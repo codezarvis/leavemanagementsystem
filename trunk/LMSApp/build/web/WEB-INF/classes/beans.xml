@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    
+   
+    
+   
+    
+    
+    <bean id="appUser" class="com.lms.domain.sub.AppUser" scope="prototype">
+          
+    </bean>
+
+
+    <bean id="department" class="com.lms.domain.sub.Department" scope="prototype">
+
+    </bean>
+
+     <bean id="staff" class="com.lms.domain.sub.Staff" scope="prototype">
+
+    </bean>
+
+    <bean id="leave" class="com.lms.domain.sub.Leave" scope="prototype">
+
+    </bean>
+
+   
+
+    
+
+</beans>
