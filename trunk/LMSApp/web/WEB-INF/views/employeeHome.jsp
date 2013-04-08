@@ -62,10 +62,7 @@
                     <!--[if lte IE 6]><table><tr><td><![endif]-->
                             <ul>
                                 <li><a href="${pageContext.request.contextPath}/leave" title="">Apply Leave</a></li>
-                                <li><a href="" title="">Lorem ipsum dolor sit amet</a></li>
-                                <li><a href="" title="">Lorem ipsum dolor sit amet</a></li>
-                                <li><a href="" title="">Lorem ipsum dolor sit amet</a></li>
-                                <li><a href="" title="">Lorem ipsum dolor sit amet</a></li>
+                               
                             </ul>
                             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
                         </li>

@@ -125,22 +125,14 @@
                         return false;
                     }*/
 
-                    $('#appHome_Ajax_Loading').show();
+                   
 
                     $.ajax({
                         type:'POST',
                         url:'${pageContext.request.contextPath}/leave',
                         data:$('#leaveForm').serialize(),
-
                         success:function(response) {
-
-                            $("#status").ajaxComplete(function(event,request,settings) {
-
-                                $('#appHome_Ajax_Loading').hide();
                                 alert(response);
-                            });
-
-
                         }
 
                     });
