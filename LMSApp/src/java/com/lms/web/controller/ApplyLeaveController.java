@@ -1,17 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lms.web.controller;
 
 import com.lms.context.id.names.ContextIdNames;
-import com.lms.domain.sub.Leave;
+
+import com.lms.domain.sub.Bal;
 import com.lms.domain.sub.Staff;
+import com.lms.domain.sub.StaffLeave;
+import com.lms.service.BalService;
 import com.lms.service.LeaveService;
 import com.lms.service.StaffService;
 import com.lms.utils.ioc.AppContext;
 import com.lms.web.forms.LeaveForm;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -64,32 +64,94 @@ public class ApplyLeaveController {
         Staff staff = staffService.findByEmployeeId(leaveForm.getEmployeeId());
 
         if (staff.getGender().equalsIgnoreCase("F")) {
-            // TO DO
         } else {
 
-            if (diffInDays > 2) {
-                response = "You Must Apply Only Two Days of Leave in Current Month !";
+            if (diffInDays > 4) {
+                response = "You Must Apply Only Four Days of Leave in Current Month !";
                 return response;
             }
         }
 
         LOG.debug("Number of Days Applied for Leaves : " + diffInDays);
         LOG.debug(leaveForm);
-        //Leave leave = (Leave) AppContext.APPCONTEXT.getBean(ContextIdNames.LEAVE);
-        Leave leave = new Leave();
+
+
+
+        StaffLeave leave = (StaffLeave) AppContext.APPCONTEXT.getBean(ContextIdNames.STAFF_LEAVE);
+
+
+
+        BalService balService = (BalService) AppContext.APPCONTEXT.getBean(ContextIdNames.BAL_SERVICE);
+        Bal existBal = balService.findByEmployeeId(leaveForm.getEmployeeId());
+
+
+        int existingCount = 0;
+
+        if (existBal == null) {
+            int totalCount = diffInDays + existingCount;
+            leave.setLeaveCount(String.valueOf(totalCount));
+
+            existBal = (Bal) AppContext.APPCONTEXT.getBean(ContextIdNames.BAL);
+
+            existBal.setEmployeeId(leaveForm.getEmployeeId());
+            existBal.setTotal(String.valueOf(totalCount));
+            existBal.setCreatedOn(new java.util.Date());
+            balService.create(existBal);
+        } else {
+
+            existingCount = Integer.parseInt(existBal.getTotal());
+
+            
+
+            Calendar calendar = Calendar.getInstance();
+            Calendar calendar1 = Calendar.getInstance();
+
+            calendar1.setTime(existBal.getCreatedOn());
+
+            LOG.debug("DB Time : " + calendar1.getTime());
+
+            LOG.debug("Current Month : " + calendar.get(Calendar.MONTH) + " DB Month : " + calendar1.get(Calendar.MONTH));
+
+            if (calendar.get(Calendar.MONTH) == calendar1.get(Calendar.MONTH)) {
+                existingCount = existingCount + diffInDays;
+                
+                if (existingCount > 4) {
+                    LOG.debug("No More Leaves are Availbale for this Month !");
+                    return "No More Leaves are Availbale for this Month !";
+                }
+            }
+
+            
+
+            existBal.setId(existBal.getId());
+            existBal.setEmployeeId(leaveForm.getEmployeeId());
+            existBal.setTotal(String.valueOf(existingCount));
+            existBal.setCreatedOn(new java.util.Date());
+            balService.create(existBal);
+
+        }
+
         leave.setEmployeeId(leaveForm.getEmployeeId());
-        leave.setFromDate(leave.getFromDate());
-        leave.setToDate(leaveForm.getToDate());
-        leave.setLeaveType(leaveForm.getLeaveType());
-        leave.setReasonsForLeave(leaveForm.getReasonsforLeave());
+        leave.setLeaveStart(leaveForm.getFromDate());
+        leave.setLeaveEnd(leaveForm.getToDate());
+        leave.setType(leaveForm.getLeaveType());
+        leave.setLeaveCount(String.valueOf(diffInDays));
+        leave.setReasons(leaveForm.getReasonsforLeave());
         leave.setAddress(leaveForm.getContactAddress());
         leave.setMobile(leaveForm.getMobile());
-        leave.setLeaveCount(String.valueOf(diffInDays));
+        leave.setCreatedOn(new java.util.Date());
+        leave.setCreatedBy(1);
+        leave.setModifiedOn(new java.util.Date());
+        leave.setModifiedBy(1);
+        leave.setActive(1);
 
-        LOG.debug("Leave in Controller : "+leave);
+        LOG.debug("Leave in Controller : " + leave);
 
         leaveService.create(leave);
+
+
         response = "Leave Application is sent to Admin !";
+
         return response;
     }
 }

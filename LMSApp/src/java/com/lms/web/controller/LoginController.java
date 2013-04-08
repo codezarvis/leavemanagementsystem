@@ -31,10 +31,7 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showLoginForm(@ModelAttribute LoginForm loginForm) {
-
-
-
-        return "/login";
+       return "/login";
     }
 
     @RequestMapping(method = RequestMethod.POST)
