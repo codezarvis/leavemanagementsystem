@@ -28,6 +28,14 @@
 
     </bean>
 
+    <bean id="remarksService" class="com.lms.service.impl.RemarksServiceImpl" scope="singleton">
+
+    </bean>
+
+    <bean id="balService" class="com.lms.service.impl.BalServiceImpl" scope="singleton">
+
+    </bean>
+
 
 
 
