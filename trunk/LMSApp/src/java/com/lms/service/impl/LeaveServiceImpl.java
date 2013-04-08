@@ -4,10 +4,12 @@
  */
 package com.lms.service.impl;
 
-import com.lms.domain.sub.Leave;
+import com.lms.domain.sub.StaffLeave;
 import com.lms.service.LeaveService;
 import com.lms.utils.hibernate.HibernateUtils;
+import java.util.List;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -27,15 +29,15 @@ public class LeaveServiceImpl extends ServiceImpl implements LeaveService {
         return leaveServiceImpl;
     }
 
-    public void create(Leave leave) {
-        LOG.debug(leave);
+    public void create(StaffLeave staffLeave) {
+        LOG.debug(staffLeave);
 
         Session session = HibernateUtils.currentSession();
         Transaction tx = null;
         boolean rollback = true;
         try {
             tx = session.beginTransaction();
-            session.saveOrUpdate(leave);
+            session.saveOrUpdate(staffLeave);
             tx.commit();
             rollback = false;
         } catch (Exception exception) {
@@ -47,5 +49,37 @@ public class LeaveServiceImpl extends ServiceImpl implements LeaveService {
             }
             HibernateUtils.closeSession();
         }
+    }
+
+    public StaffLeave findByEmployeeId(String employeeId) {
+        StaffLeave staffLeave = null;
+        Session session = HibernateUtils.currentSession();
+
+        try {
+
+            Query query = session.createQuery("from StaffLeave staffLeave where staffLeave.employeeId=:employeeId");
+            query.setParameter("employeeId", employeeId);
+            staffLeave = (StaffLeave) query.uniqueResult();
+        } catch (Exception exception) {
+            LOG.debug("LeaveServiceImpl", exception);
+        } finally {
+            HibernateUtils.closeSession();
+        }
+
+        return staffLeave;
+    }
+
+    public List<StaffLeave> getAll() {
+        List<StaffLeave> staffLeaveList = null;
+        Session session = HibernateUtils.currentSession();
+        try {
+            Query query = session.createQuery("from StaffLeave staffLeave");
+            staffLeaveList = query.list();
+        } catch (Exception exception) {
+            LOG.debug("LeaveServiceImpl", exception);
+        } finally {
+            HibernateUtils.closeSession();
+        }
+        return staffLeaveList;
     }
 }
