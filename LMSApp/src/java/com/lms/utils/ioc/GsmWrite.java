@@ -15,7 +15,7 @@ public class GsmWrite {
 
 	private static Logger LOG = Logger.getLogger(GsmWrite.class);
 
-	private static String port = "COM27"; // Modem Port.
+	private static String port = "COM5"; // Modem Port.
 	private static int bitRate = 115200; // this is also optional.
 
 	// private static String modemName = "ZTE"; //this is optional.
