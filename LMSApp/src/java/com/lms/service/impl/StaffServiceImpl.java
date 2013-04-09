@@ -79,4 +79,30 @@ public class StaffServiceImpl extends ServiceImpl implements StaffService {
         }
         return staffList;
     }
+
+    public void remove(String employeeId) {
+        
+
+        Staff staff = findByEmployeeId(employeeId);
+        
+        Session session = HibernateUtils.currentSession();
+        Transaction tx = null;
+        boolean rollback = true;
+        try {
+            tx = session.beginTransaction();
+
+            session.delete(staff);
+            tx.commit();
+            rollback = false;
+        } catch (Exception e) {
+            LOG.debug("StaffServiceImpl", e);
+        } finally {
+            if (rollback && tx != null) {
+                tx.rollback();
+            }
+            HibernateUtils.closeSession();
+        }
+
+
+    }
 }
