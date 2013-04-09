@@ -9,6 +9,16 @@
 		<param-value></param-value>
 	</context-param>
 
+    <context-param>
+        <param-name>com</param-name>
+        <param-value>COM5</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>smsc</param-name>
+        <param-value>+919848001104</param-value>
+    </context-param>
+
 	<!-- Loads the Spring web application context -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
