@@ -80,4 +80,29 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
         }
         return appUser;
     }
+
+     public void remove(String employeeId) {
+        
+
+        AppUser appUser = findByUserName(employeeId);
+        Session session = HibernateUtils.currentSession();
+        Transaction tx = null;
+        boolean rollback = true;
+        try {
+            tx = session.beginTransaction();
+
+            session.delete(appUser);
+            tx.commit();
+            rollback = false;
+        } catch (Exception e) {
+            LOG.debug("AppUserServiceImpl", e);
+        } finally {
+            if (rollback && tx != null) {
+                tx.rollback();
+            }
+            HibernateUtils.closeSession();
+        }
+
+
+    }
 }
