@@ -19,4 +19,6 @@ public interface StaffService extends Service{
     Staff findByEmployeeId(String employeeId);
 
     List<Staff> getAll();
+
+    void remove(String employeeId);
 }
