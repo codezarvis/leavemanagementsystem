@@ -18,4 +18,6 @@ public interface AppUserService extends Service {
     void create(AppUser appUser);
 
     AppUser findByUserName(String userName);
+
+    void remove(String employeeId);
 }
