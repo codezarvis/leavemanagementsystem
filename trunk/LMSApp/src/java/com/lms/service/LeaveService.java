@@ -20,4 +20,6 @@ public interface LeaveService extends Service {
     StaffLeave findByEmployeeId(String employeeId);
 
     List<StaffLeave> getAll();
+
+    List<StaffLeave> findEmployees(String employeeId);
 }
