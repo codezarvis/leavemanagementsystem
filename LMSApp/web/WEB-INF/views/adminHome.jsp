@@ -50,7 +50,7 @@
             <div class="header">
                 <div class="logo"><a href="#"><img src="resources/images/logo.gif" alt="" title="" border="0" /></a></div>
 
-                <div class="right_header">Welcome Admin,  | <a href="#" class="messages">(3) Messages</a> | <a href="${pageContext.request.contextPath}/logout" class="logout">Logout</a></div>
+                <div class="right_header">Welcome Admin,  | <a href="${pageContext.request.contextPath}/logout" class="logout">Logout</a></div>
                 <div id="clock_a"></div>
             </div>
 
@@ -59,15 +59,8 @@
                 <div class="menu">
                     <ul>
                         <li><a class="current" href="index.html">Admin Home</a></li>
-                        <li><a href="list.html">Manage Leaves<!--[if IE 7]><!--></a><!--<![endif]-->
-                    <!--[if lte IE 6]><table><tr><td><![endif]-->
-                            <ul>
-                                <li><a href="${pageContext.request.contextPath}/leaveView" title="">Applied Leaves</a></li>
-                               
-                            </ul>
-                            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-                        </li>
                         
+
                     </ul>
                 </div>
                 <div class="center_content">
@@ -83,14 +76,10 @@
 
                         <div class="sidebarmenu">
 
-                            <a class="menuitem submenuheader" href="">Admin Utils</a>
-                            <div class="submenu">
-                                <ul>
-                                    <li><a href="">Change Password</a></li>
-                                    <li><a href="">Admin Profile</a></li>
-
-                                </ul>
-                            </div>
+                            <a class="menuitem" href="${pageContext.request.contextPath}/changePassword">Change Password</a>
+                             <a class="menuitem" href="${pageContext.request.contextPath}/leaveView" title="">Applied Leaves</a>
+                             
+                            
 
 
                         </div>
@@ -101,6 +90,10 @@
                     <div class="right_content">
 
                         <h2>Staff Details</h2>
+
+                        <c:if test="${not empty errMsg}">
+                            <h3>${errMsg}</h3>
+                        </c:if>
 
 
                         <table id="rounded-corner" summary="2007 Major IT Companies' Profit">
@@ -125,23 +118,23 @@
                             </tfoot>
                             <tbody>
                                 <c:forEach items="${staffList}" var="staff">
-                                <tr>
-                                    <td></td>
-                                    
+                                    <tr>
+                                        <td></td>
 
-                                    <td>${staff.employeeId}</td>
-                                    <td>${staff.fullName}</td>
-                                    <td>${staff.departmentName}</td>
-                                    <td>${staff.email}</td>
-                                    <td>${staff.mobile}</td>
-                                    <td><a href="#"><img src="resources/images/user_edit.png" alt="" title="" border="0" /></a></td>
-                                    <td><a href="#" class="ask"><img src="resources/images/trash.png" alt="" title="" border="0" /></a></td>
 
-                                  
-                                    
-                                    
-                                </tr>
-                                  </c:forEach>
+                                        <td>${staff.employeeId}</td>
+                                        <td>${staff.fullName}</td>
+                                        <td>${staff.departmentName}</td>
+                                        <td>${staff.email}</td>
+                                        <td>${staff.mobile}</td>
+                                        <td><a href="#"><img src="resources/images/user_edit.png" alt="" title="" border="0" /></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/delete?employeeId=${staff.employeeId}" class="ask"><img src="resources/images/trash.png" alt="" title="" border="0" /></a></td>
+
+
+
+
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
 

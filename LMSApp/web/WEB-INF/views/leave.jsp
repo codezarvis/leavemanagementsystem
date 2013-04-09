@@ -41,6 +41,9 @@
 
             $(document).ready(function() {
 
+                
+
+
                 /*var date = new Date();
              var currentMonth = date.getMonth();
              var currentDate = date.getDate();
@@ -139,6 +142,21 @@
 
                 });
 
+
+                $("#perYear").click(function(){
+
+                        $.ajax({
+                            type:'GET',
+                            url:'${pageContext.request.contextPath}/perYear?employeeId=${staff.employeeId}',
+                            success : function(response) {
+                                console.debug(response);
+                                alert(response);
+                            }
+
+                        });
+
+                });
+
             });
 
 
@@ -166,6 +184,12 @@
                     </ul>
                 </div>
                 <div class="center_content">
+
+                   <div style="position:relative;top:50px;left:500px;width:200px;">
+                    <a href="#" id ="perYear" class="menuitem">Balance Leave Per Year</a>
+                   </div>
+
+                   
 
                     <div class="right_content">
 

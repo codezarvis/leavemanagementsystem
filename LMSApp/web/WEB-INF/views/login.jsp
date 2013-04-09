@@ -138,7 +138,7 @@
 
                 <h3>Admin Panel Login</h3>
 
-                <a href="#" class="forgot_pass">Forgot password</a>
+                <a href="${pageContext.request.contextPath}/forgotPassword" class="forgot_pass">Forgot password</a>
                 <div id="status" align="left">
                     <sf:form action="" method="post" class="niceform" modelAttribute="loginForm" id="loginForm">
 

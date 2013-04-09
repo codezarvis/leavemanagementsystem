@@ -1,3 +1,4 @@
+<%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -49,7 +50,7 @@
             <div class="header">
                 <div class="logo"><a href="#"><img src="resources/images/logo.gif" alt="" title="" border="0" /></a></div>
 
-                <div class="right_header">Welcome ${staff.fullName},  | <a href="#" class="messages">(3) Messages</a> | <a href="${pageContext.request.contextPath}/logout" class="logout">Logout</a></div>
+                <div class="right_header">Welcome ${staff.fullName},  | <a href="${pageContext.request.contextPath}/logout" class="logout">Logout</a></div>
                 <div id="clock_a"></div>
             </div>
 
@@ -62,9 +63,12 @@
                     <!--[if lte IE 6]><table><tr><td><![endif]-->
                             <ul>
                                 <li><a href="${pageContext.request.contextPath}/leave" title="">Apply Leave</a></li>
-                               
+
                             </ul>
                             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/security">Setup Security Question</a>
                         </li>
 
                     </ul>
@@ -82,14 +86,8 @@
 
                         <div class="sidebarmenu">
 
-                            <a class="menuitem submenuheader" href="">Staff Utils</a>
-                            <div class="submenu">
-                                <ul>
-                                    <li><a href="">Change Password</a></li>
-                                    <li><a href="">Change Profile</a></li>
+                            <a class="menuitem" href="${pageContext.request.contextPath}/changePassword">Change Password</a>
 
-                                </ul>
-                            </div>
 
 
                         </div>
@@ -99,44 +97,51 @@
 
                     <div class="right_content">
 
-                        <h2>Staff Details</h2>
+                        <h2>Leave History</h2>
 
 
                         <table id="rounded-corner" summary="2007 Major IT Companies' Profit">
                             <thead>
                                 <tr>
                                     <th scope="col" class="rounded-company"></th>
-                                    <th scope="col" class="rounded">Product</th>
-                                    <th scope="col" class="rounded">Details</th>
-                                    <th scope="col" class="rounded">Price</th>
-                                    <th scope="col" class="rounded">Date</th>
-                                    <th scope="col" class="rounded">Edit</th>
-                                    <th scope="col" class="rounded-q4">Delete</th>
+                                    <th scope="col" class="rounded">From Date</th>
+                                    <th scope="col" class="rounded">To Date</th>
+                                    <th scope="col" class="rounded">Number of Days</th>
+                                    <th scope="col" class="rounded">Type</th>
+                                    <th scope="col" class="rounded">Status</th>
+
+
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="6" class="rounded-foot-left"><em>The table allows you to Update and Delete Staff Details.Click on the Icons to Perform Operations</em></td>
-                                    <td class="rounded-foot-right">&nbsp;</td>
 
-                                </tr>
-                            </tfoot>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>Product name</td>
-                                    <td>details</td>
-                                    <td>150$</td>
-                                    <td>12/05/2010</td>
 
-                                    <td><a href="#"><img src="resources/images/user_edit.png" alt="" title="" border="0" /></a></td>
-                                    <td><a href="#" class="ask"><img src="resources/images/trash.png" alt="" title="" border="0" /></a></td>
-                                </tr>
+                                <c:forEach items="${staffLeaveList}" var="staffLeave">
+                                    <tr>
+                                        <td></td>
+                                        <td>${staffLeave.leaveEnd}</td>
+                                        <td>${staffLeave.leaveStart}</td>
+                                        <td>${staffLeave.leaveCount}</td>
+                                        <td>${staffLeave.type}</td>
+
+                                        <c:if test="${staffLeave.active == 0}">
+                                            <td>Approved</td>
+                                        </c:if>
+
+                                        <c:if test="${staffLeave.active == 2}">
+                                            <td>Rejected</td>
+                                        </c:if>
+                                        <c:if test="${staffLeave.active == 1}">
+                                        <td>Pending</td>
+                                    </c:if>
+
+                                    </tr>
+                                </c:forEach>
 
                             </tbody>
                         </table>
 
-                        <a href="${pageContext.request.contextPath}/addStaff" class="bt_green"><span class="bt_green_lft"></span><strong>Add Staff Member</strong><span class="bt_green_r"></span></a>
+
 
 
 
