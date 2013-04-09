@@ -40,9 +40,9 @@
             $(document).ready(function() {
                 $('.ask').jConfirmAction();
 
-                         
 
-                
+
+
             });
 
         </script>
@@ -53,7 +53,7 @@
     <body>
 
         <%
-        Map<String,String> map = (Map) request.getSession().getAttribute("map");
+        Map<String, String> map = (Map) request.getSession().getAttribute("map");
         List<StaffLeave> list = (List) request.getSession().getAttribute("staffLeaveList");
         %>
         <div id="main_container">
@@ -74,9 +74,9 @@
                     <!--[if lte IE 6]><table><tr><td><![endif]-->
                             <ul>
                                 <li><a href="${pageContext.request.contextPath}/leaveView" title="">Applied Leaves</a></li>
-                                <li><a href="" title="">Approved Leave Requests</a></li>
-                                <li><a href="" title="">Rejected Leave Requests</a></li>
-                               
+                                <li><a href="${pageContext.request.contextPath}/approvedList" title="">Approved Leave Requests</a></li>
+                                <li><a href="${pageContext.request.contextPath}/rejectedList" title="">Rejected Leave Requests</a></li>
+
                             </ul>
                             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
                         </li>
@@ -96,14 +96,8 @@
 
                         <div class="sidebarmenu">
 
-                            <a class="menuitem submenuheader" href="">Admin Utils</a>
-                            <div class="submenu">
-                                <ul>
-                                    <li><a href="">Change Password</a></li>
-                                    <li><a href="">Admin Profile</a></li>
+                            <a class="menuitem" href="${pageContext.request.contextPath}/changePassword">Change Password</a>
 
-                                </ul>
-                            </div>
 
 
                         </div>
@@ -115,6 +109,9 @@
 
                         <h2>Staff Leave Details</h2>
 
+                        <c:if test="${not empty msg}">
+                            <h4>${msg}</h4>
+                        </c:if>
 
                         <table id="rounded-corner" summary="2007 Major IT Companies' Profit">
                             <thead>
@@ -122,8 +119,8 @@
                                     <th scope="col" class="rounded-company"></th>
                                     <th scope="col" class="rounded">Employee Id</th>
                                     <th scope="col" class="rounded">Name</th>
-                                    <th scope="col" class="rounded">Leave Start Date</th>
-                                    <th scope="col" class="rounded">Leave End Date</th>
+                                    <th scope="col" class="rounded">Leave TO Date</th>
+                                    <th scope="col" class="rounded">Leave From Date</th>
                                     <th scope="col" class="rounded">Leave Type</th>
                                     <th scope="col" class="rounded">Mobile</th>
                                     <th scope="col" class="rounded">No.Of.days</th>
@@ -133,14 +130,16 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    
-                                    
+
+
 
                                 </tr>
                             </tfoot>
                             <tbody>
                                 <%
-                                    for(StaffLeave staffLeave : list) {
+        for (StaffLeave staffLeave : list) {
+
+            if (staffLeave.getActive() == 1) {
                                 %>
                                 <tr>
                                     <td></td>
@@ -153,15 +152,16 @@
                                     <td><%=staffLeave.getType()%></td>
                                     <td><%=staffLeave.getMobile()%></td>
                                     <td><%=staffLeave.getLeaveCount()%></td>
-                                    <td><a href="${pageContext.request.contextPath}/approve?employeeId=<%=staffLeave.getEmployeeId()%>" id="approve">Approve</a></td>
-                                    <td><a href="#" class="ask">Reject</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/approve?employeeId=<%=staffLeave.getEmployeeId()%>&from=<%=staffLeave.getLeaveStart()%>&to=<%=staffLeave.getLeaveEnd()%>" id="approve">Approve</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/reject?employeeId=<%=staffLeave.getEmployeeId()%>&from=<%=staffLeave.getLeaveStart()%>&to=<%=staffLeave.getLeaveEnd()%>">Reject</a></td>
 
 
 
 
                                 </tr>
                                 <%
-                                    }
+            }
+        }
                                 %>
                             </tbody>
                         </table>
