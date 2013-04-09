@@ -77,17 +77,24 @@ public class ApplyLeaveController {
 
 
 
-        StaffLeave leave = (StaffLeave) AppContext.APPCONTEXT.getBean(ContextIdNames.STAFF_LEAVE);
+        //StaffLeave leave = (StaffLeave) AppContext.APPCONTEXT.getBean(ContextIdNames.STAFF_LEAVE);
 
-
-
+        StaffLeave leave = leaveService.findByEmployeeId(leaveForm.getEmployeeId());
         BalService balService = (BalService) AppContext.APPCONTEXT.getBean(ContextIdNames.BAL_SERVICE);
         Bal existBal = balService.findByEmployeeId(leaveForm.getEmployeeId());
+
+        if(leave == null) {
+
+        }
+
+
+
 
 
         int existingCount = 0;
 
         if (existBal == null) {
+            leave = (StaffLeave) AppContext.APPCONTEXT.getBean(ContextIdNames.STAFF_LEAVE);
             int totalCount = diffInDays + existingCount;
             leave.setLeaveCount(String.valueOf(totalCount));
 
@@ -101,7 +108,7 @@ public class ApplyLeaveController {
 
             existingCount = Integer.parseInt(existBal.getTotal());
 
-            
+
 
             Calendar calendar = Calendar.getInstance();
             Calendar calendar1 = Calendar.getInstance();
@@ -114,14 +121,14 @@ public class ApplyLeaveController {
 
             if (calendar.get(Calendar.MONTH) == calendar1.get(Calendar.MONTH)) {
                 existingCount = existingCount + diffInDays;
-                
+
                 if (existingCount > 4) {
                     LOG.debug("No More Leaves are Availbale for this Month !");
                     return "No More Leaves are Availbale for this Month !";
                 }
+            }else {
+                existingCount = existingCount + diffInDays;
             }
-
-            
 
             existBal.setId(existBal.getId());
             existBal.setEmployeeId(leaveForm.getEmployeeId());
@@ -130,7 +137,7 @@ public class ApplyLeaveController {
             balService.create(existBal);
 
         }
-
+        leave = (StaffLeave) AppContext.APPCONTEXT.getBean(ContextIdNames.STAFF_LEAVE);
         leave.setEmployeeId(leaveForm.getEmployeeId());
         leave.setLeaveStart(leaveForm.getFromDate());
         leave.setLeaveEnd(leaveForm.getToDate());
@@ -145,7 +152,7 @@ public class ApplyLeaveController {
         leave.setModifiedBy(1);
         leave.setActive(1);
 
-        LOG.debug("Leave in Controller : " + leave);
+
 
         leaveService.create(leave);
 
