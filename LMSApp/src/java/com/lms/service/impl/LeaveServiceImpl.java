@@ -82,4 +82,21 @@ public class LeaveServiceImpl extends ServiceImpl implements LeaveService {
         }
         return staffLeaveList;
     }
+
+    public List<StaffLeave> findEmployees(String employeeId) {
+        List<StaffLeave> staffLeaveList = null;
+        Session session = HibernateUtils.currentSession();
+        try {
+
+            Query query = session.createQuery("from StaffLeave staffLeave where staffLeave.employeeId=:employeeId");
+            query.setParameter("employeeId", employeeId);
+            staffLeaveList = query.list();
+        } catch (Exception exception) {
+            LOG.debug("LeaveServiceImpl", exception);
+        } finally {
+            HibernateUtils.closeSession();
+        }
+
+        return staffLeaveList;
+    }
 }
