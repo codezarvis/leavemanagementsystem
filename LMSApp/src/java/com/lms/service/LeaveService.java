@@ -22,4 +22,6 @@ public interface LeaveService extends Service {
     List<StaffLeave> getAll();
 
     List<StaffLeave> findEmployees(String employeeId);
+
+    void delete(Integer id);
 }
