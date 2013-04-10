@@ -35,8 +35,15 @@ public class Test {
 //        appUserService.create(appUser);
 //
 
-         GsmWrite gsmWrite = new GsmWrite();
-            gsmWrite.write("919676534400", "Hai");
+
+        GsmWrite gsmWrite = new GsmWrite();
+        try {
+            gsmWrite.doIt("967653440", "Hai");
+        }catch(Exception exception){
+            exception.printStackTrace();
+
+        }
+        
 
 
     }
