@@ -69,7 +69,7 @@
 
                 <div class="menu">
                     <ul>
-                        <li><a class="current" href="index.html">Admin Home</a></li>
+                        <li><a class="current" href="${pageContext.request.contextPath}/admin">Admin Home</a></li>
                         <li><a href="list.html">Leave Requests<!--[if IE 7]><!--></a><!--<![endif]-->
                     <!--[if lte IE 6]><table><tr><td><![endif]-->
                             <ul>
@@ -166,7 +166,7 @@
                             </tbody>
                         </table>
 
-                        <a href="${pageContext.request.contextPath}/addStaff" class="bt_green"><span class="bt_green_lft"></span><strong>Add Staff Member</strong><span class="bt_green_r"></span></a>
+                        
 
 
 
