@@ -58,7 +58,7 @@
 
                 <div class="menu">
                     <ul>
-                        <li><a class="current" href="index.html">Admin Home</a></li>
+                        <li><a class="current" href="${pageContext.request.contextPath}/admin">Admin Home</a></li>
                         
 
                     </ul>
@@ -127,7 +127,7 @@
                                         <td>${staff.departmentName}</td>
                                         <td>${staff.email}</td>
                                         <td>${staff.mobile}</td>
-                                        <td><a href="#"><img src="resources/images/user_edit.png" alt="" title="" border="0" /></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/edit?employeeId=${staff.employeeId}"><img src="resources/images/user_edit.png" alt="" title="" border="0" /></a></td>
                                         <td><a href="${pageContext.request.contextPath}/delete?employeeId=${staff.employeeId}" class="ask"><img src="resources/images/trash.png" alt="" title="" border="0" /></a></td>
 
 

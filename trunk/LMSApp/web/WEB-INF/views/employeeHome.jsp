@@ -58,8 +58,8 @@
 
                 <div class="menu">
                     <ul>
-                        <li><a class="current" href="index.html">Staff Home</a></li>
-                        <li><a href="list.html">Manage Leaves<!--[if IE 7]><!--></a><!--<![endif]-->
+                        <li><a class="current" href="${pageContext.request.contextPath}/employeeHome">Staff Home</a></li>
+                        <li><a href="#">Manage Leaves<!--[if IE 7]><!--></a><!--<![endif]-->
                     <!--[if lte IE 6]><table><tr><td><![endif]-->
                             <ul>
                                 <li><a href="${pageContext.request.contextPath}/leave" title="">Apply Leave</a></li>
@@ -98,6 +98,9 @@
                     <div class="right_content">
 
                         <h2>Leave History</h2>
+                         <c:if test="${not empty msg}">
+                            <h4>${msg}</h4>
+                        </c:if>
 
 
                         <table id="rounded-corner" summary="2007 Major IT Companies' Profit">
@@ -109,6 +112,7 @@
                                     <th scope="col" class="rounded">Number of Days</th>
                                     <th scope="col" class="rounded">Type</th>
                                     <th scope="col" class="rounded">Status</th>
+                                    <th scope="col" class="rounded">Cancellation</th>
 
 
                                 </tr>
@@ -133,6 +137,7 @@
                                         </c:if>
                                         <c:if test="${staffLeave.active == 1}">
                                         <td>Pending</td>
+                                        <td><a href="${pageContext.request.contextPath}/cancelLeave?employeeId=${staffLeave.employeeId}&from=${staffLeave.leaveStart}&to=${staffLeave.leaveEnd}">Cancel Leave</a></td>
                                     </c:if>
 
                                     </tr>

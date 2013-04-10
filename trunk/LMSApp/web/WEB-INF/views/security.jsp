@@ -95,7 +95,7 @@
             <div class="header">
                 <div class="logo"><a href="#"><img src="resources/images/logo.gif" alt="" title="" border="0" /></a></div>
 
-                <div class="right_header">Setup Security Question | <a href="${pageContext.request.contextPath}/home" class="">Home</a></div>
+                <div class="right_header">Setup Security Question | <a href="${pageContext.request.contextPath}/employeeHome" class="">Home</a></div>
                 <div id="clock_a"></div>
             </div>
 

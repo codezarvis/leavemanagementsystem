@@ -106,7 +106,7 @@
             <div class="header">
                 <div class="logo"><a href="#"><img src="resources/images/logo.gif" alt="" title="" border="0" /></a></div>
 
-                <div class="right_header">Change Password | <a href="${pageContext.request.contextPath}/logout" class="">Logout</a></div>
+                <div class="right_header">Change Password | <a href="${pageContext.request.contextPath}/logout" class="">Logout</a> | <a href="${pageContext.request.contextPath}/employeeHome" class="">Home</a></div>
                 <div id="clock_a"></div>
             </div>
 
