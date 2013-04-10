@@ -3,9 +3,10 @@
  */
 package com.lms.utils.ioc;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
-import javax.servlet.http.HttpServlet;
 import org.smslib.AGateway;
 import org.smslib.IOutboundMessageNotification;
 import org.smslib.OutboundMessage;
@@ -16,7 +17,7 @@ import org.smslib.modem.SerialModemGateway;
  * @author Sudarsan
  * 
  */
-public class GsmWrite extends HttpServlet{
+public class GsmWrite {
 
 	/*private static Logger LOG = Logger.getLogger(GsmWrite.class);
 
@@ -46,26 +47,23 @@ public class GsmWrite extends HttpServlet{
     public void doIt(String mobileNumber, String message) throws Exception
 	{
         
-//        InputStream inputStream = getClass().getResourceAsStream("/WEB-INF/mobile.properties");
-//
-//
-//
-//        System.out.println("Available Size ======="+inputStream.available());
-//
-//        Properties properties = new Properties();
-//        properties.load(inputStream);
+        //InputStream inputStream = new FileInputStream(new File("classpath:mobile.properties"));
+        InputStream inputStream = getClass().getResourceAsStream("mobile.properties");
+        //System.out.println("Input Stream"+inputStream.available());
+        Properties properties = new Properties();
+        properties.load(inputStream);
         
         OutboundNotification outboundNotification = new OutboundNotification();
 		//System.out.println("Example: Send message from a serial gsm modem.");
 		//System.out.println(Library.getLibraryDescription());
 		//System.out.println("Version: " + Library.getLibraryVersion());
-		SerialModemGateway gateway = new SerialModemGateway("modem.com1", this.getServletContext().getInitParameter("com"), 115200, "Huawei", "");
+		SerialModemGateway gateway = new SerialModemGateway("modem.com1", properties.getProperty("port"), 115200, "Huawei", "");
 		gateway.setInbound(true);
 		gateway.setOutbound(true);
 		gateway.setSimPin("0000");
 		// Explicit SMSC address set is required for some modems.
 		// Below is for VODAFONE GREECE - be sure to set your own!
-		gateway.setSmscNumber(this.getServletContext().getInitParameter("smsc"));
+		gateway.setSmscNumber(properties.getProperty("smsc"));
 		Service.getInstance().setOutboundMessageNotification(outboundNotification);
 		Service.getInstance().addGateway(gateway);
 		Service.getInstance().startService();
