@@ -99,4 +99,29 @@ public class LeaveServiceImpl extends ServiceImpl implements LeaveService {
 
         return staffLeaveList;
     }
+
+    public void delete(Integer id) {
+        Session session = HibernateUtils.currentSession();
+
+         Transaction tx = null;
+        boolean rollback = true;
+        try {
+            tx = session.beginTransaction();
+            StaffLeave staffLeave = (StaffLeave) session.get(StaffLeave.class, id);
+
+            if(staffLeave!=null) {
+                session.delete(staffLeave);
+            }
+            tx.commit();
+            rollback = false;
+        } catch (Exception exception) {
+            LOG.warn("LeaveServiceImpl", exception);
+
+        } finally {
+            if (rollback && tx != null) {
+                tx.rollback();
+            }
+            HibernateUtils.closeSession();
+        }
+    }
 }
