@@ -10,6 +10,16 @@
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
 
+
+    <bean id="appMailService" class="com.lms.service.impl.AppMailServiceImpl" scope="prototype">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+    </bean>
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" scope="prototype"  p:resourceLoaderPath="classpath:/templates"
+          p:preferFileSystemAccess="false">
+
+    </bean>
     <bean id="appUserService" class="com.lms.service.impl.AppUserServiceImpl" scope="singleton">
      
     </bean>
