@@ -92,13 +92,11 @@
                         type:'POST',
                         url:'${pageContext.request.contextPath}/addStaff',
                         data:$('#staffForm').serialize(),
-                        success:function(response) {
-
-                            $("#status").ajaxComplete(function(event,request,settings) {
+                        success:function(response) {                            
 
                                 $('#appHome_Ajax_Loading').hide();
                                 alert(response);
-                            });
+                            
 
 
                         }
