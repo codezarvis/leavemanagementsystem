@@ -11,11 +11,11 @@ import com.lms.context.id.names.ContextIdNames;
 import com.lms.domain.sub.Remarks;
 import com.lms.domain.sub.StaffLeave;
 import com.lms.domain.sub.Staff;
+import com.lms.service.AppMailService;
 import com.lms.service.LeaveService;
 import com.lms.service.StaffService;
 import com.lms.service.RemarksService;
 import com.lms.utils.ioc.AppContext;
-import com.lms.utils.ioc.GsmWrite;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,12 +70,38 @@ public class RejectLeaveController {
         request.setAttribute("staffLeaveList", staffLeaveList, WebRequest.SCOPE_SESSION);
         request.setAttribute("map", map, WebRequest.SCOPE_SESSION);
 
-        GsmWrite gsmWrite = new GsmWrite();
-        try {
-            gsmWrite.doIt(staff.getMobile(), "Your Leave is Rejected ");
-        } catch (Exception exception) {
-            LOG.debug(exception);
+
+        // for GSM
+
+        /*for (StaffLeave sl : staffLeaveList) {
+            if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
+                GsmWrite gsmWrite = new GsmWrite();
+                try {
+                    gsmWrite.doIt(staff.getMobile(), "Your Leave from "+sl.getLeaveStart()+" "+sl.getLeaveEnd()+"is Rejected.");
+                } catch (Exception exception) {
+                    LOG.debug(exception);
+                }
+            }
+        }*/
+
+
+
+        // For Mail
+
+        AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
+        for (StaffLeave sl : staffLeaveList) {
+            if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
+
+                try {
+                    appMailService.sendRejectMail(sl, staff);
+
+                } catch (Exception exception) {
+                    LOG.debug(exception);
+                }
+            }
         }
+
+
 
         request.setAttribute("msg", "Process Completed !", WebRequest.SCOPE_REQUEST);
         return "/leaveView";
