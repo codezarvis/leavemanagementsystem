@@ -38,7 +38,8 @@ public class Test {
 
         GsmWrite gsmWrite = new GsmWrite();
         try {
-            gsmWrite.doIt("967653440", "Hai");
+            //gsmWrite.write("91967653440", "Hai");
+            gsmWrite.doIt("8885578008", "Happy Ugadi from Sudarsan, Sent using SMS Lib API");
         }catch(Exception exception){
             exception.printStackTrace();
 
