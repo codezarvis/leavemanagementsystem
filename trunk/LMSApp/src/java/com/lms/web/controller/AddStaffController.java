@@ -8,6 +8,7 @@ import com.lms.context.id.names.ContextIdNames;
 import com.lms.domain.sub.AppUser;
 import com.lms.domain.sub.Department;
 import com.lms.domain.sub.Staff;
+import com.lms.service.AppMailService;
 import com.lms.service.AppUserService;
 import com.lms.service.DepartmentService;
 import com.lms.service.StaffService;
@@ -77,9 +78,23 @@ public class AddStaffController {
         AppUserService appUserService = (AppUserService) AppContext.APPCONTEXT.getBean(ContextIdNames.APP_USER_SERVICE);
         appUserService.create(appUser);
 
+
+        try {
+
+
+            AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
+            appMailService.sendMail(appUser, staff);
+
+        } catch (Exception exception) {
+            response = "Staff Registration Completed\nUnable to Sent mail to Employee";
+            LOG.debug("AddStaffController", exception);
+            return response;
+
+        }
         LOG.debug(stafForm);
 //        GsmWrite gsmWrite = new GsmWrite();
 //        gsmWrite.write("91" + staff.getMobileNumber(), "Welcome "+staff.getFullName()+" to LMS.\nLogin to LMS using your Employee ID :" + staff.getEmployeeId() + " and the Password : " + PasswordGenarator.genaratePassword());
+
 
 
         response = "Registration Completed !";
