@@ -8,11 +8,11 @@ import com.lms.context.id.names.ContextIdNames;
 import com.lms.domain.sub.Remarks;
 import com.lms.domain.sub.StaffLeave;
 import com.lms.domain.sub.Staff;
+import com.lms.service.AppMailService;
 import com.lms.service.LeaveService;
 import com.lms.service.StaffService;
 import com.lms.service.RemarksService;
 import com.lms.utils.ioc.AppContext;
-import com.lms.utils.ioc.GsmWrite;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,13 +71,44 @@ public class ApproveLeaveController {
         request.setAttribute("map", map, WebRequest.SCOPE_SESSION);
 
 
-        GsmWrite  gsmWrite = new GsmWrite();
-        try {
-            gsmWrite.doIt(staff.getMobile(), "Your Leave is Approved ");
-        }catch(Exception exception){
-            LOG.debug(exception);
+
+
+
+
+        // for GSM
+
+        /*for (StaffLeave sl : staffLeaveList) {
+            if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
+                GsmWrite gsmWrite = new GsmWrite();
+                try {
+                    gsmWrite.doIt(staff.getMobile(), "Your Leave from "+sl.getLeaveStart()+" "+sl.getLeaveEnd()+"is Approved !, Have a Nice Day !");
+                } catch (Exception exception) {
+                    LOG.debug(exception);
+                }
+            }
+        }*/
+
+
+        // For Mail
+
+        AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
+        for (StaffLeave sl : staffLeaveList) {
+            if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
+
+                try {
+                    appMailService.sendApproveMail(sl, staff);
+
+                } catch (Exception exception) {
+                    LOG.debug(exception);
+                }
+            }
         }
-        
+
+
+
+
+
+
         //gsmWrite.write("91"+staff.getMobile(), "Your Leave is Approved !");
 
         request.setAttribute("msg", "Process Completed !", WebRequest.SCOPE_REQUEST);
