@@ -8,11 +8,11 @@ import com.lms.context.id.names.ContextIdNames;
 import com.lms.domain.sub.Remarks;
 import com.lms.domain.sub.StaffLeave;
 import com.lms.domain.sub.Staff;
-import com.lms.service.AppMailService;
 import com.lms.service.LeaveService;
 import com.lms.service.StaffService;
 import com.lms.service.RemarksService;
 import com.lms.utils.ioc.AppContext;
+import com.lms.utils.ioc.GsmWrite;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +77,7 @@ public class ApproveLeaveController {
 
         // for GSM
 
-        /*for (StaffLeave sl : staffLeaveList) {
+        for (StaffLeave sl : staffLeaveList) {
             if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
                 GsmWrite gsmWrite = new GsmWrite();
                 try {
@@ -86,12 +86,12 @@ public class ApproveLeaveController {
                     LOG.debug(exception);
                 }
             }
-        }*/
+        }
 
 
         // For Mail
 
-        AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
+        /*AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
         for (StaffLeave sl : staffLeaveList) {
             if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
 
@@ -102,7 +102,7 @@ public class ApproveLeaveController {
                     LOG.debug(exception);
                 }
             }
-        }
+        }*/
 
 
 
