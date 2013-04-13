@@ -161,7 +161,6 @@ public class ApplyLeaveController {
         leave.setActive(1);
 
 
-
         leaveService.create(leave);
 
 
