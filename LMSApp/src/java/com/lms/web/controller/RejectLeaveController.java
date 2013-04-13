@@ -11,11 +11,11 @@ import com.lms.context.id.names.ContextIdNames;
 import com.lms.domain.sub.Remarks;
 import com.lms.domain.sub.StaffLeave;
 import com.lms.domain.sub.Staff;
-import com.lms.service.AppMailService;
 import com.lms.service.LeaveService;
 import com.lms.service.StaffService;
 import com.lms.service.RemarksService;
 import com.lms.utils.ioc.AppContext;
+import com.lms.utils.ioc.GsmWrite;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +73,7 @@ public class RejectLeaveController {
 
         // for GSM
 
-        /*for (StaffLeave sl : staffLeaveList) {
+        for (StaffLeave sl : staffLeaveList) {
             if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
                 GsmWrite gsmWrite = new GsmWrite();
                 try {
@@ -82,13 +82,13 @@ public class RejectLeaveController {
                     LOG.debug(exception);
                 }
             }
-        }*/
+        }
 
 
 
         // For Mail
 
-        AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
+        /*AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
         for (StaffLeave sl : staffLeaveList) {
             if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
 
@@ -99,7 +99,7 @@ public class RejectLeaveController {
                     LOG.debug(exception);
                 }
             }
-        }
+        }*/
 
 
 
