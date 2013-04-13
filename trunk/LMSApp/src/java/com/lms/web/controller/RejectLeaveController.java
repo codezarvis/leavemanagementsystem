@@ -11,6 +11,7 @@ import com.lms.context.id.names.ContextIdNames;
 import com.lms.domain.sub.Remarks;
 import com.lms.domain.sub.StaffLeave;
 import com.lms.domain.sub.Staff;
+import com.lms.service.BalService;
 import com.lms.service.LeaveService;
 import com.lms.service.StaffService;
 import com.lms.service.RemarksService;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
-
+import com.lms.domain.sub.Bal;
 /**
  *
  * @author Sudarsan
@@ -45,7 +46,7 @@ public class RejectLeaveController {
         LOG.debug("Staff Leave Object : " + staffLeaveList);
         //LOG.debug("Staff Object : "+staff);
         RemarksService remarksService = (RemarksService) AppContext.APPCONTEXT.getBean(ContextIdNames.REMARKS_SERVICE);
-
+        BalService balService = (BalService) AppContext.APPCONTEXT.getBean(ContextIdNames.BAL_SERVICE);
 
         for (StaffLeave sl : staffLeaveList) {
             if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
@@ -58,6 +59,15 @@ public class RejectLeaveController {
                 sl.setActive(2);
 
                 leaveService.create(sl);
+
+                /*Bal bal = balService.findByEmployeeId(sl.getEmployeeId());
+
+                int exist = Integer.parseInt(bal.getTotal());
+                int count = Integer.parseInt(sl.getLeaveCount());
+                bal.setTotal(String.valueOf(exist - count));
+                bal.setId(bal.getId());
+                balService.create(bal);*/
+
             }
         }
 
@@ -77,7 +87,7 @@ public class RejectLeaveController {
             if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
                 GsmWrite gsmWrite = new GsmWrite();
                 try {
-                    gsmWrite.doIt(staff.getMobile(), "Your Leave from "+sl.getLeaveStart()+" "+sl.getLeaveEnd()+"is Rejected.");
+                    gsmWrite.doIt(staff.getMobile(), "Your Leave from " + sl.getLeaveStart() + " " + sl.getLeaveEnd() + "is Rejected.");
                 } catch (Exception exception) {
                     LOG.debug(exception);
                 }
@@ -90,15 +100,15 @@ public class RejectLeaveController {
 
         /*AppMailService appMailService = (AppMailService) AppContext.APPCONTEXT.getBean("appMailService");
         for (StaffLeave sl : staffLeaveList) {
-            if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
+        if (sl.getEmployeeId().equals(employeeId) && sl.getLeaveStart().equals(from) && sl.getLeaveEnd().equals(to)) {
 
-                try {
-                    appMailService.sendRejectMail(sl, staff);
+        try {
+        appMailService.sendRejectMail(sl, staff);
 
-                } catch (Exception exception) {
-                    LOG.debug(exception);
-                }
-            }
+        } catch (Exception exception) {
+        LOG.debug(exception);
+        }
+        }
         }*/
 
 
