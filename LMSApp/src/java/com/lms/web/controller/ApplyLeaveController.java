@@ -53,6 +53,10 @@ public class ApplyLeaveController {
             LOG.debug(leaveForm.getFromDate());
             Date fromDate = simpleDateFormat.parse(leaveForm.getFromDate());
             Date toDate = simpleDateFormat.parse(leaveForm.getToDate());
+
+            LOG.debug("From Date : \n"+fromDate);
+            LOG.debug("To Date : \n"+toDate);
+            
             diffInDays = (int) ((fromDate.getTime() - toDate.getTime()) / DAY_IN_MILLIS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,9 +128,11 @@ public class ApplyLeaveController {
 
                 if (existingCount > 4) {
                     LOG.debug("No More Leaves are Availbale for this Month !");
-                    return "No More Leaves are Availbale for this Month !";
+                    response = "No More Leaves are Availbale for this Month !";
+                    return response;
                 }
             }else {
+                LOG.debug("Next Month========================");
                 existingCount = existingCount + diffInDays;
             }
 
@@ -137,6 +143,8 @@ public class ApplyLeaveController {
             balService.create(existBal);
 
         }
+
+
         leave = (StaffLeave) AppContext.APPCONTEXT.getBean(ContextIdNames.STAFF_LEAVE);
         leave.setEmployeeId(leaveForm.getEmployeeId());
         leave.setLeaveStart(leaveForm.getFromDate());
