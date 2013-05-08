@@ -118,6 +118,16 @@
                         return false;
                     }
 
+
+                    if(gen == 'F') {
+                        var from = $('#date-picker').date();
+                        var to = $('date-picker').date();
+
+                        if(from.eq(to) == 61) {
+                          alert('You r Going to Apply Matarnity Leave');
+                        }
+                    }
+
                     if(email == null || email.length == 0) {
                         alert('Email is required !');
                         return false;
@@ -204,14 +214,14 @@
                                         <sf:hidden path="employeeId" name="" id="employeeId" size="20" value="${staff.employeeId}"/>
                                         <dl>
                                             <dt><label for="email">Leave Requested From:</label></dt>
-                                            <dd><sf:input path="toDate" name="" id="date-picker" size="20" /></dd>
+                                            <dd><sf:input path="fromDate" name="" id="date-picker" size="20" /></dd>
                                         </dl>
 
 
                                         <dl>
                                             <dt><label for="gender">To Date:</label></dt>
                                             <dd>
-                                                <sf:input path="fromDate" name="" id="date-picker1" size="20" />
+                                                <sf:input path="toDate" name="" id="date-picker1" size="20" />
                                             </dd>
                                         </dl>
 
