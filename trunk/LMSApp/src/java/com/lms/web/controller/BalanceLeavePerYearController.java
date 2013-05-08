@@ -33,15 +33,15 @@ public class BalanceLeavePerYearController {
         Bal bal = balService.findByEmployeeId(employeeId);
 
         if(bal == null) {
-            response = "Leaves Available for this Year : 48";
+            response = "Leaves Available for this Year : 28";
             return response;
         }
         LOG.debug("Bal Object : "+bal);
-        if (Integer.parseInt(bal.getTotal()) == 48) {
+        if (Integer.parseInt(bal.getTotal()) == 28) {
             response = "No Leaves Availiable for this Month";
             return response;
         }
-        int left = 48 - Integer.parseInt(bal.getTotal());
+        int left = 28 - Integer.parseInt(bal.getTotal());
         response =  "Leaves Available for this Year : " + left;
         return response;
     }
